@@ -1,0 +1,56 @@
+.container{
+    &__main{
+        position: relative;
+        padding-left: 30rem;
+
+        #tracker-card-container{
+            display: none;
+        }
+
+        .breakpoint(@BTABLET, {
+            padding-left: 0rem;
+
+            #tracker-card-container{
+                display: grid;
+            }
+
+            #tracker-table-container{
+                display: none;
+                visibility: hidden;
+                pointer-events: none;
+            }
+        });
+
+        &__title{
+            margin: 5rem 3rem 0;
+            padding: 0 2rem;
+            border-left: 3px solid #0d3e8f;
+
+            h1{
+                color: #0d3e8f;
+            }
+
+            p{
+                color: #8c8c8c;
+            }
+        }
+
+        &__focus{
+            margin: 3rem 3rem 0;
+
+            &__cards{
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 1.5rem;
+
+                .breakpoint(@MTABLET, {
+                    grid-template-columns: 1fr 1fr;
+                });
+
+                .breakpoint(@LPHONE, {
+                    grid-template-columns: 1fr;
+                });
+            }
+        }
+    }
+}

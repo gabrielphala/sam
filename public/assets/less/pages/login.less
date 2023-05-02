@@ -1,0 +1,52 @@
+.login{
+    &__main{
+        width: 80rem;
+        margin: 10rem auto 0;
+
+        &__logo{
+            margin-bottom: 4rem;
+
+            p{
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                margin-left: 2rem;
+            }
+        }
+
+        &__form{
+            &__details{
+                flex: 1;
+
+                &__header{
+                    margin-bottom: 2rem;
+                }
+
+                &__body{
+                    margin-bottom: 3rem;
+
+                    .input:not(:last-child) {
+                        margin-bottom: 1.4rem;
+                    }
+
+                    button {
+                        margin-top: 1rem;
+                        padding: 1rem 1.4rem;
+                    }
+                }
+
+                &__footer{
+                    color: #9b9b9b;
+                }
+            }
+
+            &__illustration{
+                flex: 0 0 35rem;
+                margin-left: 3rem;
+
+                img{
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

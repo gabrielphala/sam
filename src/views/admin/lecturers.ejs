@@ -1,0 +1,157 @@
+<div class="container">
+    <%- include('../partials/sidenav/admin') %>
+    <div class="container__main">
+        <%- include('../partials/header/admin') %>
+
+        <div class="container__main__title">
+            <h1>Lecturer</h1>
+            <p>Manage lecturers and their associated modules</p>
+        </div>
+        <div class="container__main__focus">
+            <div class="card table">
+                <div class="table__header">
+                    <ul class="table__header__row flex">
+                        <li class="table__header__row__item">#</li>
+                        <li class="table__header__row__item">Last name</li>
+                        <li class="table__header__row__item">Initials</li>
+                        <li class="table__header__row__item">Staff number</li>
+                        <li class="table__header__row__item">Added on</li>
+                        <li class="table__header__row__item">...</li>
+                    </ul>
+                </div>
+                <div class="table__body" id="lecturer-list">
+                    <ul class="table__body__row"></ul>
+                </div>
+                <div class="card__body empty flex flex--a-center flex--j-center" id="no-lecturers"
+                    style="display: none;">
+                    <img src="/assets/illustrations/no-data.svg" alt="No data">
+                    <div class="empty_caption">
+                        <h1>Lecturers not found</h1>
+                        <p>There aren't any lecturers at the moment.</p>
+                        <p>Lecturers will appear here when available.</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="open-lecturer-modal btn btn--primary" style="margin-top: 3rem;">Add new lecturer</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal--closed" id="lecturer-modal">
+    <form class="modal__main card" id="lecturer-form">
+        <div class="card__header card__header--no-border flex flex--a-center flex--j-space-between">
+            <div class="card__header__left">
+                <h1>New lecturer</h1>
+                <p>Add new lecturer</p>
+            </div>
+            <svg class="image--icon close-lecturer-modal">
+                <use href="#cross"></use>
+            </svg>
+        </div>
+        <div class="card__body">
+            <p id="new-lecturer-error" class="hide" style="margin-bottom: 1rem; color: darkred;">Error: something went wrong</p>
+
+            <div class="twin-inputs flex flex--j-space-between">
+                <div class="input">
+                    <input type="text" id="lecturer-lastname" placeholder="Last name">
+                </div>
+                <div class="input">
+                    <input type="text" id="lecturer-initials" placeholder="Initials">
+                </div>
+            </div>
+
+            <div class="input" style="margin-top: 1.4rem;">
+                <input type="text" id="lecturer-staff-no" placeholder="Staff number">
+            </div>
+            
+            <div id="module-selection-container" style="max-height: 18rem; overflow-y: auto;">
+                <input type="text" id="module-count" value="1" hidden>
+                <div class="input" id="module-item-1" style="margin-top: 1.4rem;">
+                    <label for="module-1" id="module-1-label">Module: 1</label>
+                    <div class="flex flex--a-center">
+                        <select id="module-1" class="modules__item" style="flex: 1;">
+                            <option value="select">Select</option>
+                        </select>
+                        <svg class="image--icon" style="margin-left: 1rem; fill: #b68c8c;" id="delete-item-1">
+                            <use href="#cancel"></use>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card__footer">
+            <button class="btn btn--primary">Add lecturer</button>
+            <button class="btn btn--primary" id="add-module" type="button">Add module</button>
+            <button class="btn close-lecturer-modal" type="button">Cancel</button>
+        </div>
+    </form>
+</div>
+<div class="modal modal--closed" id="lecturer-update-modal">
+    <form class="modal__main card" id="lecturer-update-form">
+        <div class="card__header card__header--no-border flex flex--a-center flex--j-space-between">
+            <div class="card__header__left">
+                <h1>Update lecturer</h1>
+                <p>Update lecturer details</p>
+            </div>
+            <svg class="image--icon close-lecturer-modal">
+                <use href="#cross"></use>
+            </svg>
+        </div>
+        <div class="card__body">
+            <input type="text" id="lecturer-update-id" hidden>
+
+            <p id="update-lecturer-error" class="hide" style="margin-bottom: 1rem; color: darkred;">Error: something went wrong</p>
+
+            <div class="twin-inputs flex flex--j-space-between">
+                <div class="input">
+                    <input type="text" id="lecturer-update-lastname" placeholder="Last name">
+                </div>
+                <div class="input">
+                    <input type="text" id="lecturer-update-initials" placeholder="Initials">
+                </div>
+            </div>
+        </div>
+        <div class="card__footer">
+            <button class="btn btn--primary">Update lecturer</button>
+            <button class="btn close-lecturer-update-modal" type="button">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<script src="/assets/js/dist/jquery.js"></script>
+
+<script type="module">
+    import { openModal, closeModal } from "/assets/js/src/helpers/modal.js"
+    import { createModuleItem, removeModuleItem } from "/assets/js/src/helpers/module-selection.js"
+    import Lecturer from "/assets/js/src/auth/Lecturer.js"
+    import Module from "/assets/js/src/auth/Module.js"
+
+    $('.open-lecturer-modal').on('click', e => openModal('lecturer'));
+
+    $('.close-lecturer-modal').on('click', e => closeModal('lecturer'));
+
+    $('#add-module').on('click', e => createModuleItem());
+
+    $('#delete-item-1').on('click', e => removeModuleItem(1))
+
+    $('#lecturer-form').on('submit', e => {
+        e.preventDefault();
+
+        Lecturer.add()
+    });
+
+    $('.close-lecturer-update-modal').on('click', e => closeModal('lecturer-update'));
+
+    $('#lecturer-update-form').on('submit', e => {
+        e.preventDefault();
+
+        Lecturer.update()
+    });
+
+    $(() => {
+        Module.load_modules();
+
+        Lecturer.fetch_all();
+    })
+</script>

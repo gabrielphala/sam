@@ -1,0 +1,25 @@
+.main{
+    position: fixed;
+    top: 0;
+    width: calc(100% - 30rem);
+    height: 5rem;
+    padding: 0 3rem;
+    z-index: 100;
+
+    .breakpoint(@BTABLET, {
+        width: 100%;
+
+        svg{
+            display: block;
+            fill: #898989;
+        }
+    });
+
+    &__left{
+        h4{
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #706e6e;
+        }
+    }
+}

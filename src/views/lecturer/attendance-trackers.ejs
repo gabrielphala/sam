@@ -1,0 +1,127 @@
+<div class="container">
+    <%- include('../partials/sidenav/lecturer') %>
+    <div class="container__main">
+        <%- include('../partials/header/lecturer') %>
+
+        <div class="container__main__title">
+            <h1>Attendance trackers</h1>
+            <p>Keep track of your students' attendances</p>
+        </div>
+        <div class="container__main__focus">
+            <div class="card table">
+                <div class="table__header">
+                    <ul class="table__header__row flex">
+                        <li class="table__header__row__item">#</li>
+                        <li class="table__header__row__item">Module</li>
+                        <li class="table__header__row__item">Attendance count</li>
+                        <li class="table__header__row__item">Period start</li>
+                        <li class="table__header__row__item">Period end</li>
+                        <li class="table__header__row__item">Status</li>
+                        <li class="table__header__row__item">...</li>
+                    </ul>
+                </div>
+                <div class="table__body" id="attendance-tracker-list">
+                    <ul class="table__body__row"></ul>
+                </div>
+                <div class="card__body empty flex flex--a-center flex--j-center" id="no-attendance-trackers" style="display: none;">
+                    <img src="/assets/illustrations/no-data.svg" alt="No data">
+                    <div class="empty_caption">
+                        <h1>Attendance trackers not found</h1>
+                        <p>There aren't any attendance trackers at the moment.</p>
+                        <p>Attendance trackers will appear here when available.</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="open-tracker-modal btn btn--primary" style="margin-top: 3rem;">Add new tracker</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal--closed" id="tracker-modal">
+    <form class="modal__main card" id="tracker-form">
+        <div class="card__header card__header--no-border flex flex--a-center flex--j-space-between">
+            <div class="card__header__left">
+                <h1>New attendance tracker</h1>
+                <p>Add new tracker</p>
+            </div>
+            <svg class="image--icon close-tracker-modal">
+                <use href="#cross"></use>
+            </svg>
+        </div>
+        <div class="card__body">
+            <div class="twin-inputs flex flex--j-space-between">
+                <div class="input">
+                    <label for="start-period">Start period</label>
+                    <input type="datetime-local" id="start-period">
+                </div>
+                <div class="input">
+                    <label for="end-period">End period</label>
+                    <input type="datetime-local" id="end-period">
+                </div>
+            </div>
+
+            <div class="input" id="module-item-1" style="margin-top: 1.4rem;">
+                <label for="module-1" id="module-1-label">Module</label>
+                <select id="module-1">
+                    <option value="select">Select</option>
+                </select>
+            </div>
+        </div>
+        <div class="card__footer">
+            <button class="btn btn--primary">Add tracker</button>
+            <button class="btn close-tracker-modal" type="button">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<div class="modal modal--closed" id="qr-code-modal">
+    <div class="modal__main card">
+        <div class="card__header card__header--no-border flex flex--a-center flex--j-space-between">
+            <div class="card__header__left">
+                <h1>Attendance QR Code</h1>
+                <p>Attendance id</p>
+            </div>
+            <svg class="image--icon close-qr-code-modal">
+                <use href="#cross"></use>
+            </svg>
+        </div>
+        <div class="card__body flex flex--j-center">
+            <div id="attendance-qr" style="width: 30rem; height: 30rem;"></div>
+        </div>
+        <div class="card__footer">
+            <button class="btn close-qr-code-modal" type="button">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/js/dist/jquery.js"></script>
+<script src="/assets/js/dist/qrcode/qrcode.min.js"></script>
+
+<script type="module">
+    import { openModal, closeModal } from "/assets/js/src/helpers/modal.js"
+    import Student from "/assets/js/src/auth/Student.js"
+    import Module from "/assets/js/src/auth/Module.js"
+    import AttendanceTracker from "/assets/js/src/auth/AttendanceTracker.js"
+
+    $('.open-tracker-modal').on('click', e => openModal('tracker'));
+
+    $('.close-tracker-modal').on('click', e => closeModal('tracker'));
+
+    $('.close-qr-code-modal').on('click', e => {
+        closeModal('qr-code');
+
+        clearInterval(int_id);
+    });
+
+    $('#tracker-form').on('submit', e => {
+        e.preventDefault();
+
+        AttendanceTracker.add();
+    })
+
+    $(() => {
+        Module.load_modules_by_lecturer()
+        AttendanceTracker.get_by_lecturer()
+    })
+</script>
