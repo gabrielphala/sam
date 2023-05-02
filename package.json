@@ -16,7 +16,7 @@
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "node-localstorage": "^2.2.1",
-    "sqlifier": "^1.0.1"
+    "sqlifier": "^1.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
