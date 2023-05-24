@@ -18,10 +18,7 @@
         for (let i = 0; i < data.length; i++) {
             if (hasIndex) formatedRow += `${++index},`
 
-            for (let column in data[i]) {
-                if (!allowedColumns.includes(column))
-                    continue;
-
+            for (let column of allowedColumns) {
                 formatedRow += data[i][column] + ","
             }
 
