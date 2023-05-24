@@ -8,6 +8,15 @@
             <p>Add modules for lecturers and students</p>
         </div>
         <div class="container__main__focus">
+            <div class="search flex flex--a-center" style="margin-bottom: 2rem;">
+                <div class="input" style="flex: 1; margin-right: 3rem;">
+                    <input type="text" id="search-value" placeholder="Search modules">
+                </div>
+                <button class="btn btn--primary" style="padding: .8rem 1.4rem;" id="search-btn">Search modules</button>
+            </div>
+            <div class="reports" style="margin-bottom: 2rem;">
+                <p id="download-csv">Download CSV Report</p>
+            </div>
             <div class="card table">
                 <div class="table__header">
                     <ul class="table__header__row flex">
@@ -93,6 +102,8 @@
     </form>
 </div>
 
+<a download id="download-anchor"></a>
+
 <script src="/assets/js/dist/jquery.js"></script>
 
 <script type="module">
@@ -118,4 +129,12 @@
     });
 
     $(() => Module.fetch_all())
+
+    $('#search-btn').on('click', e => {
+        Module.searchModules();
+    })
+
+    $('#download-csv').on('click', e => {
+        Module.downloadCSV();
+    })
 </script>

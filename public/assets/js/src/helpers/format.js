@@ -132,6 +132,27 @@ export const formatStudentAttendanceTrackers = (attendanceTrackers) => {
     return formated;
 }
 
+export const formatAdminAttendanceTrackers = (attendanceTrackers) => {
+    let formated = '', count = 1;
+
+    attendanceTrackers.forEach(attendanceTracker => {
+        formated += `
+            <ul class="table__body__row">
+                <li class="table__body__row__item">${count}</li>
+                <li class="table__body__row__item">${attendanceTracker.lastname}</li>
+                <li class="table__body__row__item">${attendanceTracker.initials}</li>
+                <li class="table__body__row__item">${attendanceTracker.name}</li>
+                <li class="table__body__row__item">${getStaticDate(attendanceTracker.start_period)}</li>
+                <li class="table__body__row__item">${getStaticDate(attendanceTracker.end_period)}</li>
+            </ul>
+        `
+
+        count++
+    });
+
+    return formated;
+}
+
 export const formatStudentAttendanceCardTrackers = (attendanceTrackers) => {
     let formated = '', count = 1;
 

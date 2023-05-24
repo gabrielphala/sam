@@ -4,6 +4,7 @@ const student_routes = require('./student');
 const lecturer_routes = require('./lecturer');
 const attendance_tracker_routes = require('./attendance-tracker');
 const register = require('./register');
+const download = require('./download');
 
 module.exports = (router) => {
     admin_routes(router);
@@ -12,4 +13,5 @@ module.exports = (router) => {
     lecturer_routes(router);
     attendance_tracker_routes(router);
     register(router);
+    download(router);
 };

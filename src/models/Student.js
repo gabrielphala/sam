@@ -23,6 +23,16 @@ module.exports = new (class Student extends SQLifier {
         });
     }
 
+    searchStudents (searchValue) {
+        return this.search({
+            condition: [
+                { initials: searchValue },
+                { lastname: searchValue },
+                { student_no: searchValue },
+            ]
+        })
+    }
+
     updateStudent (id, lastname, initials) {
         this.update({ id }, {
             lastname,

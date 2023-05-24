@@ -13,6 +13,15 @@ module.exports = new (class Module extends SQLifier {
         })
     }
 
+    searchModules (searchValue) {
+        return this.search({
+            condition: [
+                { name: searchValue },
+                { code: searchValue }
+            ]
+        })
+    }
+
     fetch_by_id (id) {
         return this.findOne({
             condition: {

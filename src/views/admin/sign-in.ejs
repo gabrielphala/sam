@@ -5,7 +5,7 @@
             <p>Student Attendance Monitor</p>
         </div>
         <div class="login__main__form flex">
-            <form class="login__main__form__details">
+            <form class="login__main__form__details" id="sign-in-form">
                 <div class="login__main__form__details__header">
                     <h1>Sign in</h1>
                     <p>Administration</p>
@@ -14,10 +14,10 @@
                     <p id="sign-in-error" class="hide" style="margin-bottom: 1rem; color: darkred;">Error: something went wrong</p>
 
                     <div class="input">
-                        <input type="text" id="" placeholder="Email address">
+                        <input type="text" id="email-address" placeholder="Email address">
                     </div>
                     <div class="input">
-                        <input type="text" id="" placeholder="Password">
+                        <input type="password" id="password" placeholder="Password">
                     </div>
                     <button class="btn btn--primary">Sign in</button>
                 </div>
@@ -33,3 +33,15 @@
         </div>
     </div>
 </div>
+
+<script src="/assets/js/dist/jquery.js"></script>
+
+<script type="module">
+    import Admin from "/assets/js/src/auth/Admin.js"
+
+    $('#sign-in-form').on('submit', e => {
+        e.preventDefault();
+
+        Admin.sign_in()
+    });
+</script>

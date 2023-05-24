@@ -79,11 +79,11 @@ module.exports = class StudentService {
                 condition: { student_no: body.student_no, is_deleted: false }
             });
 
-            if (studentDetails.isEmpty)
-                throw 'Student no or Password is incorrect';
+            if (!studentDetails)
+                throw 'Student no is not registered';
 
             if (!(await isSame(studentDetails.password, body.password)))
-                throw 'Student no or Password is incorrect';
+                throw 'Password is incorrect';
 
             const details = studentDetails.toObject();
 
@@ -104,5 +104,15 @@ module.exports = class StudentService {
 
             return wrap_res;
         } catch (e) { throw e; }
+    }
+
+    static async searchStudents (wrap_res, body) {
+        try {
+            wrap_res.students = await Student.searchStudents(body.searchValue);
+
+            wrap_res.successful = true;
+
+            return wrap_res;
+        } catch (err) { throw err; }
     }
 }

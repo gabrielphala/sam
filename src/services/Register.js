@@ -8,7 +8,7 @@ module.exports = class RegisterService {
         try {
             let latest_spot = await Register.getOpenSpotByAttendanceId(body.attendance_tracker_id)
             
-            if (latest_spot.isEmpty) {
+            if (!latest_spot) {
                 latest_spot = await Register.insert({
                     attendance_tracker_id: body.attendance_tracker_id,
                     unique_no: String.uniqueId(10)
@@ -36,7 +36,7 @@ module.exports = class RegisterService {
 
             const spot = await Register.findOne({ unique_no: body.registration_spot_id, status: 'open' })
 
-            if (spot.isEmpty)
+            if (!spot)
                 throw 'QR Code has expired or has been used';
 
             spot.student_id = student_info.id;

@@ -32,6 +32,21 @@ module.exports = new (class AttendanceTracker extends SQLifier {
         })
     }
 
+    getForAdmin () {
+        return this.find({
+            join: [
+                {
+                    ref: 'module',
+                    id: 'module_id'
+                },
+                {
+                    ref: 'lecturer',
+                    id: 'lecturer_id'
+                }
+            ]
+        })
+    }
+
     getByStudentModules (condition) {
         return this.find({
             condition

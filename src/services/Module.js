@@ -57,6 +57,16 @@ module.exports = class ModuleService {
         } catch (e) { throw e; }
     }
 
+    static async searchModules (wrap_res, body) {
+        try {
+            wrap_res.modules = await Module.searchModules(body.searchValue);
+
+            wrap_res.successful = true;
+
+            return wrap_res;
+        } catch (err) { throw err; }
+    }
+
     static async fetch_by_lecturer (wrap_res, _, { lecturer_info }) {
         try {
             const lecturer_modules = await LecturerModule.getByLecturer(lecturer_info.id),

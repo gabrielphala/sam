@@ -1,6 +1,6 @@
 node_modules
-public\assets\js\src\src
 public\assets\less
+public\assets\downloads\tmp\*
 .env
 webpack.config.js
 less-watch-compiler.config.json

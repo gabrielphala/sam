@@ -79,11 +79,11 @@ module.exports = class LecturerService {
                 condition: { staff_no: body.staff_no, is_deleted: false }
             });
 
-            if (lecturerDetails.isEmpty)
-                throw 'Staff no or Password is incorrect';
+            if (!lecturerDetails)
+                throw 'Staff no is not registered';
 
             if (!(await isSame(lecturerDetails.password, body.password)))
-                throw 'Staff no or Password is incorrect';
+                throw 'Password is incorrect';
 
             const details = lecturerDetails.toObject();
             
@@ -104,5 +104,15 @@ module.exports = class LecturerService {
 
             return wrap_res;
         } catch (e) { throw e; }
+    }
+
+    static async searchLecturers (wrap_res, body) {
+        try {
+            wrap_res.lecturers = await Lecturer.searchLecturers(body.searchValue);
+
+            wrap_res.successful = true;
+
+            return wrap_res;
+        } catch (err) { throw err; }
     }
 }

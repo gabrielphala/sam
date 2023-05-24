@@ -13,4 +13,5 @@ module.exports = (router) => {
     router.post('/student/delete', base_controller.wrap(student_service.delete));
     router.post('/student/sign-in', base_controller.wrap(student_service.sign_in));
     router.post('/student/fetch/all', base_controller.wrap(student_service.fetch_all));
+    router.post('/student/search/all', base_controller.wrap(student_service.searchStudents));
 };

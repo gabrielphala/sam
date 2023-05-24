@@ -43,6 +43,14 @@ module.exports = class AttendanceService {
         } catch (e) { throw e; }
     }
 
+    static async get_for_admin (wrap_res, _) {
+        try {
+            wrap_res.attendanceTrackers = await AttendanceTracker.getForAdmin();
+
+            return wrap_res;
+        } catch (e) { throw e; }
+    }
+
     static async get_by_student_modules (wrap_res, _, { student_info }) {
         try {
             const student_modules = await StudentModule.getBystudent(student_info.id),

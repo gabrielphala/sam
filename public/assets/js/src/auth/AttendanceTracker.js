@@ -6,10 +6,21 @@ import { arrayNotEmpty } from "../helpers/array.js"
 import {
     formatLecturerAttendanceTrackers,
     formatStudentAttendanceTrackers,
-    formatStudentAttendanceCardTrackers
+    formatStudentAttendanceCardTrackers,
+    formatAdminAttendanceTrackers
 } from "../helpers/format.js"
 
 let interval_state = 0;
+
+let cachedTrackers = [];
+
+const tableHeader = [
+    '#', 'Lecturer last name', 'Lecturer initials', 'Module', 'Starts', 'Ends'
+]
+
+const allowedColumns = [
+    'lastname', 'initials', 'name', 'start_period', 'end_period'
+]
 
 export default class AttendanceTracker {
     static readQRCode (tracker_id, module_id) {
@@ -154,5 +165,39 @@ export default class AttendanceTracker {
         $('#no-attendance-trackers').show();
         $('#attendance-tracker-list').html('');
         return $('#tracker-card-container').html('');
+    }
+
+    static async get_for_admin () {
+        const response = await fetch('/attendance-tracker/fetch/admin')
+
+        cachedTrackers = response.attendanceTrackers;
+
+        if (arrayNotEmpty(response.attendanceTrackers)) {
+            $('#no-trackers').hide();
+            $('#tracker-list').html(formatAdminAttendanceTrackers(response.attendanceTrackers));
+            return;
+        }
+
+        $('#no-trackers').show();
+        return $('#tracker-list').html('');
+    }
+
+    static async downloadCSV () {
+        const response = await fetch('/download/csv', {
+            body: {
+                data: cachedTrackers,
+                tableHeader,
+                allowedColumns,
+                reportName: 'trackers'
+            }
+        });
+
+        if (response.successful) {
+            const anchor = $('#download-anchor')
+
+            anchor.attr('href', `/assets/downloads/tmp/${response.filename}`)
+
+            anchor[0].click();
+        }
     }
 }

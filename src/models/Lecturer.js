@@ -30,6 +30,16 @@ module.exports = new (class Lecturer extends SQLifier {
         })
     }
 
+    searchLecturers (searchValue) {
+        return this.search({
+            condition: [
+                { initials: searchValue },
+                { lastname: searchValue },
+                { staff_no: searchValue },
+            ]
+        })
+    }
+
     deleteLecturer (id) {
         this.update({ id }, { is_deleted: true })
     }

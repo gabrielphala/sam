@@ -5,6 +5,16 @@ import { closeModal, openModal } from "../helpers/modal.js"
 import { arrayNotEmpty } from "../helpers/array.js"
 import { formatAdminModules, formatSelect } from "../helpers/format.js"
 
+let cachedModules = [];
+
+const tableHeader = [
+    '#', 'Module name', 'Module code', 'Added on'
+]
+
+const allowedColumns = [
+    'name', 'code', 'added_on'
+]
+
 export default class Module {
     static async add () {
         const response = await fetch('/module/add', {
@@ -58,6 +68,8 @@ export default class Module {
     static async fetch_all () {
         const response = await fetch('/module/fetch/all') 
 
+        cachedModules = response.modules;
+
         if (arrayNotEmpty(response.modules)) {
             $('#no-modules').hide();
 
@@ -90,6 +102,68 @@ export default class Module {
             
         $('#no-modules').show();
         return $('#module-list').html('');
+    }
+
+    static async searchModules () {
+        const response = await fetch('/module/search/all', {
+            body: {
+                searchValue: $('#search-value').val()
+            }
+        })
+
+        cachedModules = response.modules;
+
+        if (arrayNotEmpty(response.modules)) {
+            $('#no-modules').hide();
+
+            $('#module-list').html(formatAdminModules(response.modules));
+
+            const deleteBtn = $('.table__body__row__item__delete');
+
+            deleteBtn.off();
+
+            deleteBtn.on('click', e => {
+                const parent = e.currentTarget.parentElement.parentElement;
+
+                Module.delete(parent.dataset.moduleid)
+            })
+
+            const editBtn = $('.table__body__row__item__edit');
+
+            editBtn.off();
+
+            editBtn.on('click', e => {
+                const parent = e.currentTarget.parentElement.parentElement;
+
+                $('#module-update-id').val(parent.dataset.moduleid);
+
+                openModal('module-update');
+            })
+
+            return;
+        }
+
+        $('#no-modules').show();
+        return $('#module-list').html('');
+    }
+
+    static async downloadCSV () {
+        const response = await fetch('/download/csv', {
+            body: {
+                data: cachedModules,
+                tableHeader,
+                allowedColumns,
+                reportName: 'modules'
+            }
+        });
+
+        if (response.successful) {
+            const anchor = $('#download-anchor')
+
+            anchor.attr('href', `/assets/downloads/tmp/${response.filename}`)
+
+            anchor[0].click();
+        }
     }
 
     static async load_modules () {
