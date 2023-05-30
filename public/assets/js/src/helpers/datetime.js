@@ -18,6 +18,8 @@ const makeTime = (date) => {
 }
 
 export const getStaticDate = (date) => {
+    if (typeof date == 'string') date = date.substring(0, 19)
+    
     const { time, day, month, year } = makeTime(new Date(date));
 
     return `${time}, ${day} ${month} ${year[2] + year[3]}'`;
