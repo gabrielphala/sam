@@ -89,7 +89,7 @@ export default class Lecturer {
         })
 
         if (response.successful)
-            return location.href = '/l/attendance-trackers'
+            return location.href = '/l/trackers'
 
         showError('sign-in-error', response.error)
     }

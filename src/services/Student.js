@@ -3,7 +3,6 @@ const Student = require('../models/Student')
 const v = require("../helpers/Validation")
 const jwt = require("../helpers/Jwt");
 
-const { makeMySQLDate } = require("../helpers/Date");
 const { hash, isSame } = require('../helpers/Hasher');
 
 const StudentModuleService = require('./StudentModule');
@@ -30,8 +29,7 @@ module.exports = class StudentService {
                 lastname: body.lastname,
                 initials: body.initials,
                 student_no: body.student_no,
-                password: await hash('Password123'),
-                added_on: makeMySQLDate()
+                password: await hash('Password123')
             })
 
             StudentModuleService

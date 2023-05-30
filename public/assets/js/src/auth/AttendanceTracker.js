@@ -34,6 +34,12 @@ export default class AttendanceTracker {
                 }
             });
 
+            let timeout = setTimeout(() => {
+                location.href = '/s/attendances';
+                
+                clearTimeout(timeout)
+            }, 1000)
+
             closeModal('qr-code-reader')
         }
 
@@ -87,7 +93,8 @@ export default class AttendanceTracker {
             body: {
                 start_period: $('#start-period').val(),
                 end_period: $('#end-period').val(),
-                module_id: $('#module-1').val()
+                module_id: $('#module-1').val(),
+                pc_count: $('#pc-count').val()
             }
         })
 
@@ -130,6 +137,11 @@ export default class AttendanceTracker {
                     e.currentTarget.dataset.attendancetrackermoduleid,
                 )
             })
+
+            $('.table__body__row__item__students').on('click', e => {
+                location.href = 
+                    `/l/attendances?t=${e.currentTarget.dataset.attendancetrackerid}`;
+            });
 
             const deleteBtn = $('.table__body__row__item__delete');
 

@@ -2,7 +2,6 @@ const Module = require('../models/Module')
 const LecturerModule = require("../models/LecturerModule")
 
 const v = require("../helpers/Validation")
-const { makeMySQLDate } = require("../helpers/Date")
  
 module.exports = class ModuleService {
     static async add (wrap_res, body) {
@@ -14,8 +13,7 @@ module.exports = class ModuleService {
 
             await Module.insert({
                 name: body.name,
-                code: body.code,
-                added_on: makeMySQLDate()
+                code: body.code
             })
 
             wrap_res.successful = true;

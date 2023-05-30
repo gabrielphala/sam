@@ -30,8 +30,7 @@ module.exports = class LecturerService {
                 lastname: body.lastname,
                 initials: body.initials,
                 staff_no: body.staff_no,
-                password: await hash('Password123'),
-                added_on: makeMySQLDate()
+                password: await hash('Password123')
             })
 
             LecturerModuleService

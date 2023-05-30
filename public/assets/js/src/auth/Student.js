@@ -89,7 +89,7 @@ export default class Student {
         })
 
         if (response.successful)
-            return location.href = '/s/attendance-trackers'
+            return location.href = '/s/trackers'
 
         showError('sign-in-error', response.error)
     }

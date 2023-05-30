@@ -1,4 +1,4 @@
-const { SQLifier } = require('sqlifier');
+const { SQLifier, SQLDate } = require('sqlifier');
 
 module.exports = new (class Lecturer extends SQLifier {
     constructor () {
@@ -10,7 +10,7 @@ module.exports = new (class Lecturer extends SQLifier {
             initials: { type: 'varchar', length: 5 },
             staff_no: { type: 'int', length: 10 },
             password: { type: 'varchar', length: 250 },
-            added_on: { type: 'datetime' },
+            added_on: { type: 'datetime', default: SQLDate.now },
             is_deleted: { type: 'boolean', default: false }
         })
     }

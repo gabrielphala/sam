@@ -1,0 +1,44 @@
+<div class="container">
+    <%- include('../partials/sidenav/lecturer') %>
+    <div class="container__main">
+        <%- include('../partials/header/lecturer') %>
+
+        <div class="container__main__title">
+            <h1>Attendances</h1>
+            <p>Monitor students' who signed the register</p>
+        </div>
+        <div class="container__main__focus">
+            <div class="card table">
+                <div class="table__header">
+                    <ul class="table__header__row flex">
+                        <li class="table__header__row__item">#</li>
+                        <li class="table__header__row__item">Lastname</li>
+                        <li class="table__header__row__item">Initials</li>
+                        <li class="table__header__row__item">Student no</li>
+                    </ul>
+                </div>
+                <div class="table__body" id="attendance-list">
+                    <ul class="table__body__row"></ul>
+                </div>
+                <div class="card__body empty flex flex--a-center flex--j-center" id="no-attendances" style="display: none;">
+                    <img src="/assets/illustrations/no-data.svg" alt="No data">
+                    <div class="empty_caption">
+                        <h1>Students not found</h1>
+                        <p>There aren't any students who have signed at the moment.</p>
+                        <p>Students who sign the register will appear here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/js/dist/jquery.js"></script>
+
+<script type="module">
+    import Register from "/assets/js/src/auth/Register.js"
+
+    $(() => {
+        Register.get_students_by_tracker();
+    })
+</script>

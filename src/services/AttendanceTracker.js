@@ -2,21 +2,17 @@ const AttendanceTracker = require('../models/AttendanceTracker')
 const StudentModule = require('../models/StudentModule')
 const Module = require('../models/Module')
 
-const { makeMySQLDate } = require("../helpers/Date");
-
 module.exports = class AttendanceService {
     static async add (wrap_res, body, store) {
         try {
-            if ((await AttendanceTracker.exists(
-                { lecturer_id: store.lecturer_info.id, module_id: body.module_id, status: 'open' }
-            )).found)
-                throw 'An open tracker already exists for this module';
+            if (body.module_id == 'select') throw 'Please select a module';
 
             AttendanceTracker.insert({
                 lecturer_id: store.lecturer_info.id,
                 module_id: body.module_id,
-                start_period: makeMySQLDate(new Date(body.start_period)),
-                end_period: makeMySQLDate(new Date(body.end_period)),
+                pc_count: body.pc_count,
+                start_period: new Date(`${body.start_period}`),
+                end_period: new Date(`${body.end_period}`),
             })
 
             wrap_res.successful = true;
