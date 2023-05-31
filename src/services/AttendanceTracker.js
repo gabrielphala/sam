@@ -2,6 +2,8 @@ const AttendanceTracker = require('../models/AttendanceTracker')
 const StudentModule = require('../models/StudentModule')
 const Module = require('../models/Module')
 
+const moment = require("moment-timezone");
+
 module.exports = class AttendanceService {
     static async add (wrap_res, body, store) {
         try {
@@ -11,8 +13,8 @@ module.exports = class AttendanceService {
                 lecturer_id: store.lecturer_info.id,
                 module_id: body.module_id,
                 pc_count: body.pc_count,
-                start_period: new Date(`${body.start_period}`),
-                end_period: new Date(`${body.end_period}`),
+                start_period: moment(`${body.start_period}`).toDate(),
+                end_period: moment(`${body.end_period}`).toDate(),
             })
 
             wrap_res.successful = true;
