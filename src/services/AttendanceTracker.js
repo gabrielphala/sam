@@ -13,8 +13,8 @@ module.exports = class AttendanceService {
                 lecturer_id: store.lecturer_info.id,
                 module_id: body.module_id,
                 pc_count: body.pc_count,
-                start_period: moment(`${body.start_period}`).toDate(),
-                end_period: moment(`${body.end_period}`).toDate(),
+                start_period: moment(`${body.start_period}Z`).toDate(),
+                end_period: moment(`${body.end_period}Z`).toDate(),
             })
 
             wrap_res.successful = true;
