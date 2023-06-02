@@ -9,6 +9,7 @@ import {
     formatStudentAttendanceCardTrackers,
     formatAdminAttendanceTrackers
 } from "../helpers/format.js"
+import { showError } from "../helpers/error.js";
 
 let interval_state = 0;
 
@@ -103,6 +104,8 @@ export default class AttendanceTracker {
 
             return closeModal('tracker')
         }
+
+        showError('new-tracker-error', response.error);
     }
 
     static async delete (tracker_id) {

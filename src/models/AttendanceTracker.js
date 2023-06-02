@@ -9,7 +9,7 @@ module.exports = new (class AttendanceTracker extends SQLifier {
             attendance_count: { type: 'int', length: 3, default: 0 },
             lecturer_id: { type: 'int', ref: 'lecturer' },
             module_id: { type: 'int', ref: 'module' },
-            pc_count: { type: 'int', length: 3 },
+            pc_count: { type: 'int', length: 3, default: 10 },
             start_period: { type: 'datetime' },
             end_period: { type: 'datetime' },
             status: { type: 'varchar', length: 20, default: 'open' },

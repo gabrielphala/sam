@@ -8,15 +8,16 @@ module.exports = class AttendanceService {
     static async add (wrap_res, body, store) {
         try {
             if (body.module_id == 'select') throw 'Please select a module';
+            if (!body.pc_count || body.pc_count && body.pc_count == 0) throw 'Please specify PC count';
 
             AttendanceTracker.insert({
                 lecturer_id: store.lecturer_info.id,
                 module_id: body.module_id,
-                pc_count: body.pc_count,
+                pc_count: body.pc_count || 10,
                 start_period: moment(`${body.start_period}Z`).toDate(),
                 end_period: moment(`${body.end_period}Z`).toDate(),
             })
-
+ 
             wrap_res.successful = true;
 
             return wrap_res;
