@@ -5,7 +5,8 @@ import { arrayNotEmpty } from "../helpers/array.js"
 
 import {
     formatLecturerStudents,
-    formatStudentAttendanceHistory
+    formatStudentAttendanceHistory,
+    formatAttendanceCards
 } from "../helpers/format.js"
 
 let cachedTrackers = [];
@@ -43,13 +44,17 @@ export default class AttendanceTracker {
 
         // cachedTrackers = response.attendanceTrackers;
 
+        console.log(formatAttendanceCards(response.students))
+
         if (arrayNotEmpty(response.students)) {
             $('#no-attendances').hide();
             $('#attendance-list').html(formatStudentAttendanceHistory(response.students));
+            $('#attendance-card-container').html(formatAttendanceCards(response.students));
             return;
         }
 
         $('#no-attendances').show();
+        $('#attendance-card-container').html('');
         return $('#attendance-list').html('');
     }
 }

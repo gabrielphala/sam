@@ -3,23 +3,36 @@
         position: relative;
         padding-left: 30rem;
 
-        #tracker-card-container{
+        #tracker-card-container, #attendance-card-container{
             display: none;
         }
 
         .breakpoint(@BTABLET, {
             padding-left: 0rem;
 
-            #tracker-card-container{
+            #tracker-card-container, #attendance-card-container{
                 display: grid;
             }
 
-            #tracker-table-container{
+            #tracker-table-container, #attendance-table-container{
                 display: none;
                 visibility: hidden;
                 pointer-events: none;
             }
         });
+
+        &__dropdown-menu{
+            margin: 6rem 0 0;
+            padding: 0 3rem;
+            background-color: #d7d7d7;
+            color: #0046b9;
+
+            ul{
+                li{
+                    padding: .5rem 0;
+                }
+            }
+        }
 
         &__title{
             margin: 5rem 3rem 0;

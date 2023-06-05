@@ -184,21 +184,33 @@ li {
   position: relative;
   padding-left: 30rem;
 }
-.container__main #tracker-card-container {
+.container__main #tracker-card-container,
+.container__main #attendance-card-container {
   display: none;
 }
 @media (max-width: 960px) {
   .container__main {
     padding-left: 0rem;
   }
-  .container__main #tracker-card-container {
+  .container__main #tracker-card-container,
+  .container__main #attendance-card-container {
     display: grid;
   }
-  .container__main #tracker-table-container {
+  .container__main #tracker-table-container,
+  .container__main #attendance-table-container {
     display: none;
     visibility: hidden;
     pointer-events: none;
   }
+}
+.container__main__dropdown-menu {
+  margin: 6rem 0 0;
+  padding: 0 3rem;
+  background-color: #d7d7d7;
+  color: #0046b9;
+}
+.container__main__dropdown-menu ul li {
+  padding: 0.5rem 0;
 }
 .container__main__title {
   margin: 5rem 3rem 0;

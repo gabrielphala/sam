@@ -217,6 +217,32 @@ export const formatStudentAttendanceCardTrackers = (attendanceTrackers) => {
     return formated;
 }
 
+export const formatAttendanceCards = (attendances) => {
+    let formated = '', count = 1;
+
+    attendances.forEach(attendance => {
+        formated += `
+            <div class="container__main__focus__cards__item card">
+                <div class="card__header card__header--no-border">
+                    <div class="card__header__left">
+                        <h1>${attendance.name}</h1>
+                    </div>
+                </div>
+                <div class="card__body">
+                    <p>Attended on: ${getStaticDate(attendance.end_period)}</p>
+                </div>
+                <div class="card__footer">
+                    <p>PC No: ${attendance.pc_no}</p>
+                </div>
+            </div>
+        `
+
+        count++
+    });
+
+    return formated;
+}
+
 export const formatSelect = (modules) => {
     let formated = '<option value="select">Select</option>';
 

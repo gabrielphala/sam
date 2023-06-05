@@ -3,12 +3,20 @@
     <div class="container__main">
         <%- include('../partials/header/student') %>
 
+        <nav class="container__main__dropdown-menu hide">
+            <ul>
+                <li>Attendance</li>
+                <li>History</li>
+                <li>Sign out</li>
+            </ul>
+        </nav>
+
         <div class="container__main__title">
             <h1>Attendance history</h1>
             <p>Keep track of your attendance history</p>
         </div>
         <div class="container__main__focus">
-            <div class="card table" id="tracker-table-container">
+            <div class="card table" id="attendance-table-container">
                 <div class="table__header">
                     <ul class="table__header__row flex">
                         <li class="table__header__row__item">#</li>
@@ -21,8 +29,7 @@
                 <div class="table__body" id="attendance-list">
                     <ul class="table__body__row"></ul>
                 </div>
-                <div class="card__body empty flex flex--a-center flex--j-center" id="no-attendances"
-                    style="display: none;">
+                <div class="card__body empty flex flex--a-center flex--j-center" id="no-attendances" style="display: none;">
                     <img src="/assets/illustrations/no-data.svg" alt="No data">
                     <div class="empty_caption">
                         <h1>Hisotry not found</h1>
@@ -30,6 +37,7 @@
                     </div>
                 </div>
             </div>
+            <div class="container__main__focus__cards" id="attendance-card-container"></div>
         </div>
     </div>
 </div>
@@ -41,5 +49,13 @@
 
     $(() => {
         Register.get_attendances();
+    })
+
+    $('#toggle-dropdown-menu').on('click', e => {
+        const menu = $('.container__main__dropdown-menu')[0]
+
+        if (Array.from(menu.classList).includes('hide')) return $(menu).removeClass('hide');
+
+        $(menu).addClass('hide');
     })
 </script>
