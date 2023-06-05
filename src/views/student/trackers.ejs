@@ -3,6 +3,14 @@
     <div class="container__main">
         <%- include('../partials/header/student') %>
 
+        <nav class="container__main__dropdown-menu hide">
+            <ul>
+                <li><a href="/s/attendances">Attendance</a></li>
+                <li><a href="/s/trackers">History</a></li>
+                <li><a href="/s/sign-out">Sign out</a></li>
+            </ul>
+        </nav>
+
         <div class="container__main__title">
             <h1>Attendance trackers</h1>
             <p>Sign in to your modules with ease</p>
@@ -68,4 +76,12 @@
     $(() => {
         AttendanceTracker.get_by_student();
     })
+
+    $('#toggle-dropdown-menu').on('click', e => {
+            const menu = $('.container__main__dropdown-menu')[0]
+
+            if (Array.from(menu.classList).includes('hide')) return $(menu).removeClass('hide');
+
+            $(menu).addClass('hide');
+        })
 </script>
