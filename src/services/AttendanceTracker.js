@@ -3,6 +3,7 @@ const StudentModule = require('../models/StudentModule')
 const Module = require('../models/Module')
 
 const moment = require("moment-timezone");
+const { SQLDate } = require('sqlifier');
 
 module.exports = class AttendanceService {
     static async add (wrap_res, body, store) {
@@ -56,7 +57,11 @@ module.exports = class AttendanceService {
                 conditions = [];
 
             student_modules.forEach((student_module) => {
-                return conditions.push({ module_id: student_module.module_id, status: 'open' })
+                return conditions.push({
+                    module_id: student_module.module_id,
+                    status: 'open',
+                    end_period: { $gt: SQLDate.now() }
+                })
             })
 
             wrap_res.attendanceTrackers = await AttendanceTracker.getByStudentModules(conditions);

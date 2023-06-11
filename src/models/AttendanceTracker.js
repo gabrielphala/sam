@@ -1,4 +1,4 @@
-const { SQLifier } = require('sqlifier');
+const { SQLifier, SQLDate } = require('sqlifier');
 
 module.exports = new (class AttendanceTracker extends SQLifier {
     constructor() {
@@ -25,7 +25,11 @@ module.exports = new (class AttendanceTracker extends SQLifier {
 
     getByLecturer (lecturer_id) {
         return this.find({
-            condition: { lecturer_id, is_deleted: false },
+            condition: {
+                lecturer_id,
+                is_deleted: false,
+                end_period: { $gt: SQLDate.now() }
+            },
             join: {
                 ref: 'module',
                 id: 'module_id'
