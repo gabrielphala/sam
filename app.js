@@ -4,8 +4,10 @@ if (process.env.NODE_ENV != 'production')
 const express = require('express');
 const config = require('./src/config');
 const loaders = require('./src/loaders');
+const { SQLDate } = require('sqlifier');
 
 (async () => {
+    console.log(SQLDate.now());
     const app = express();
     const router = express.Router();
 
