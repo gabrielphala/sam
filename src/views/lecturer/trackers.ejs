@@ -81,6 +81,43 @@
     </form>
 </div>
 
+<div class="modal modal--closed" id="edit-tracker-modal">
+    <form class="modal__main card" id="edit-tracker-form">
+        <div class="card__header card__header--no-border flex flex--a-center flex--j-space-between">
+            <div class="card__header__left">
+                <h1>Edit attendance tracker</h1>
+                <p>Correct tracker</p>
+            </div>
+            <svg class="image--icon close-edit-tracker-modal">
+                <use href="#cross"></use>
+            </svg>
+        </div>
+        <div class="card__body">
+            <input type="text" id="edit-tracker-id" hidden>
+            <p style="font-weight: bold; color: darkred; margin-bottom: 1rem;" id="edit-tracker-error"></p>
+
+            <div class="twin-inputs flex flex--j-space-between">
+                <div class="input">
+                    <label for="edit-start-period">Start period</label>
+                    <input type="datetime-local" id="edit-start-period">
+                </div>
+                <div class="input">
+                    <label for="edit-end-period">End period</label>
+                    <input type="datetime-local" id="edit-end-period">
+                </div>
+            </div>
+
+            <div class="input" style="margin-top: 1.4rem;">
+                <input type="number" id="edit-pc-count" placeholder="PC Count">
+            </div>
+        </div>
+        <div class="card__footer">
+            <button class="btn btn--primary">Edit tracker</button>
+            <button class="btn close-edit-tracker-modal" type="button">Cancel</button>
+        </div>
+    </form>
+</div>
+
 <div class="modal modal--closed" id="qr-code-modal">
     <div class="modal__main card">
         <div class="card__header card__header--no-border flex flex--a-center flex--j-space-between">
@@ -114,6 +151,8 @@
 
     $('.close-tracker-modal').on('click', e => closeModal('tracker'));
 
+    $('.close-edit-tracker-modal').on('click', e => closeModal('edit-tracker'));
+
     $('.close-qr-code-modal').on('click', e => {
         closeModal('qr-code');
 
@@ -124,6 +163,12 @@
         e.preventDefault();
 
         AttendanceTracker.add();
+    })
+
+    $('#edit-tracker-form').on('submit', e => {
+        e.preventDefault();
+
+        AttendanceTracker.edit();
     })
 
     $(() => {

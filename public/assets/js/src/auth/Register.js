@@ -9,14 +9,14 @@ import {
     formatAttendanceCards
 } from "../helpers/format.js"
 
-let cachedTrackers = [];
+let cachedStudents = [];
 
 const tableHeader = [
-    '#', 'Lecturer last name', 'Lecturer initials', 'Module', 'Starts', 'Ends'
+    '#', 'Lastname', 'Initials', 'Student no'
 ]
 
 const allowedColumns = [
-    'lastname', 'initials', 'name', 'start_period', 'end_period'
+    'lastname', 'initials', 'student_no'
 ]
 
 export default class AttendanceTracker {
@@ -27,7 +27,9 @@ export default class AttendanceTracker {
             }
         });
 
-        // cachedTrackers = response.attendanceTrackers;
+        cachedStudents = response.students;
+
+        console.log(cachedStudents);
 
         if (arrayNotEmpty(response.students)) {
             $('#no-attendances').hide();
@@ -56,5 +58,24 @@ export default class AttendanceTracker {
         $('#no-attendances').show();
         $('#attendance-card-container').html('');
         return $('#attendance-list').html('');
+    }
+
+    static async downloadCSV() {
+        const response = await fetch('/download/csv', {
+            body: {
+                data: cachedStudents,
+                tableHeader,
+                allowedColumns,
+                reportName: 'student-register'
+            }
+        });
+
+        if (response.successful) {
+            const anchor = $('#download-anchor')
+
+            anchor.attr('href', `/assets/downloads/tmp/${response.filename}`)
+
+            anchor[0].click();
+        }
     }
 }

@@ -108,6 +108,25 @@ export default class AttendanceTracker {
         showError('new-tracker-error', response.error);
     }
 
+    static async edit () {
+        const response = await fetch('/attendance-tracker/edit', {
+            body: {
+                tracker_id: $('#edit-tracker-id').val(),
+                start_period: $('#edit-start-period').val(),
+                end_period: $('#edit-end-period').val(),
+                pc_count: $('#edit-pc-count').val()
+            }
+        })
+
+        if (response.successful) {
+            await AttendanceTracker.get_by_lecturer()
+
+            return closeModal('edit-tracker')
+        }
+
+        showError('edit-tracker-error', response.error);
+    }
+
     static async delete (tracker_id) {
         const response = await fetch('/attendance-tracker/delete', {
             body: {
@@ -152,6 +171,17 @@ export default class AttendanceTracker {
 
             deleteBtn.on('click', async e => {
                 await AttendanceTracker.delete(e.currentTarget.dataset.attendancetrackerid);
+            })
+
+            const editBtn = $('.table__body__row__item__edit');
+
+            editBtn.off();
+
+            editBtn.on('click', async e => {
+                $('#edit-tracker-id').val(e.currentTarget.dataset.attendancetrackerid);
+
+                openModal('edit-tracker');
+                // await AttendanceTracker.edit();
             })
 
             return;

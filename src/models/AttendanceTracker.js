@@ -24,6 +24,7 @@ module.exports = new (class AttendanceTracker extends SQLifier {
     }
 
     getByLecturer (lecturer_id) {
+        console.log(SQLDate.now());
         return this.find({
             condition: {
                 lecturer_id,

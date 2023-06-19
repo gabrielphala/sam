@@ -7,7 +7,6 @@ const loaders = require('./src/loaders');
 const { SQLDate } = require('sqlifier');
 
 (async () => {
-    console.log(SQLDate.now());
     const app = express();
     const router = express.Router();
 

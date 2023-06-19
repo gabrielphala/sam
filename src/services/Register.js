@@ -28,13 +28,12 @@ module.exports = class RegisterService {
 
     static async sign (wrap_res, body, { student_info }) {
         try {
-            console.log((await Register.countUsedPCs(body.attendance_tracker_id)));
             if ((await Register.exists({ student_id: student_info.id, attendance_tracker_id: body.attendance_tracker_id })).found)
                 throw 'You have already signed in to this class';
 
             let tracker = await AttendanceTracker.getById(body.attendance_tracker_id)
             
-            tracker.attendance_count++;
+            tracker.attendance_count += 1;
 
             tracker.save();
 
@@ -44,12 +43,17 @@ module.exports = class RegisterService {
                 }
             })
 
+            const usedPCCount = (await Register.countUsedPCs(body.attendance_tracker_id))
+
             if (!spot)
                 throw 'QR Code has expired or has been used';
 
+            if (tracker.pc_count < usedPCCount)
+                throw 'All PCs in the lab have been used up';
+
             spot.student_id = student_info.id;
             spot.status = 'closed';
-            spot.pc_no = (await Register.countUsedPCs(body.attendance_tracker_id));
+            spot.pc_no = usedPCCount;
 
             spot.save();
 

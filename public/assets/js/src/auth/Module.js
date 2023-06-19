@@ -169,12 +169,14 @@ export default class Module {
     static async load_modules () {
         const response = await fetch('/module/fetch/all') 
 
+        $('#edit-module-1').html(formatSelect(response.modules));
         return $('#module-1').html(formatSelect(response.modules));
     }
 
     static async load_modules_by_lecturer () {
         const response = await fetch('/module/fetch/lecturer') 
 
+        $('#edit-module-1').html(formatSelect(response.modules));
         return $('#module-1').html(formatSelect(response.modules));
     }
 }
