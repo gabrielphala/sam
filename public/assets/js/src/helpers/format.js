@@ -258,7 +258,7 @@ export const formatStudentStats = (modules) => {
                 <li class="table__body__row__item">${_module.code}</li>
                 <li class="table__body__row__item">${_module.all_attendances}</li>
                 <li class="table__body__row__item">${_module.student_attendances}</li>
-                <li class="table__body__row__item">${(_module.student_attendances / _module.all_attendances * 100).toFixed(2)}%</li>
+                <li class="table__body__row__item">${((_module.student_attendances / _module.all_attendances || 0) * 100).toFixed(2)}%</li>
             </ul>
         `
     });
@@ -329,7 +329,7 @@ export const formatStatsCardTrackers = (stats) => {
                 </div>
                 <div class="card__footer flex flex--j-space-between">
                     <p>Attended classes: ${stat.student_attendances}</p>
-                    <p>${(stat.student_attendances / stat.all_attendances * 100).toFixed(2) }%</p>
+                    <p>${((stat.student_attendances / stat.all_attendances || 0) * 100).toFixed(2) }%</p>
                 </div>
             </div>
         `
