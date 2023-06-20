@@ -7,4 +7,5 @@ module.exports = (router) => {
     router.post('/register/get-students-by-tracker', base_controller.wrap(register_service.get_students_by_tracker));
     router.post('/register/get-attendances', base_controller.wrap_with_store(register_service.get_attendances));
     router.post('/register/get-stats', base_controller.wrap_with_store(register_service.get_stats));
+    router.post('/register/get-module-stats', base_controller.wrap(register_service.get_students_stats_module));
 };

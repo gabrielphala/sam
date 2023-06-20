@@ -4,38 +4,38 @@
         <%- include('../partials/header/lecturer') %>
 
         <div class="container__main__title">
-            <h1>Modules</h1>
-            <p>These are the modules you lecture</p>
+            <h1>Attendance stats</h1>
+            <p>Keep track of your attendance stats</p>
         </div>
-        
+
         <div class="container__main__focus">
             <div class="reports" style="margin-bottom: 2rem;">
                 <p id="download-csv">Download CSV Report</p>
             </div>
-            <div class="card table">
+
+            <div class="card table" id="stats-table-container">
                 <div class="table__header">
                     <ul class="table__header__row flex">
                         <li class="table__header__row__item">#</li>
+                        <li class="table__header__row__item">Student name</li>
                         <li class="table__header__row__item">Module name</li>
                         <li class="table__header__row__item">Module code</li>
-                        <li class="table__header__row__item">Added on</li>
-                        <li class="table__header__row__item">...</li>
+                        <li class="table__header__row__item">All classes</li>
+                        <li class="table__header__row__item">Attended classes</li>
+                        <li class="table__header__row__item">Attended classes (%)</li>
                     </ul>
                 </div>
-                <div class="table__body" id="module-list">
+                <div class="table__body" id="stats-list">
                     <ul class="table__body__row"></ul>
                 </div>
-                <div class="card__body empty flex flex--a-center flex--j-center" id="no-modules" style="display: none;">
+                <div class="card__body empty flex flex--a-center flex--j-center" id="no-stats" style="display: none;">
                     <img src="/assets/illustrations/no-data.svg" alt="No data">
                     <div class="empty_caption">
-                        <h1>Attendance trackers not found</h1>
-                        <p>There aren't any attendance trackers at the moment.</p>
-                        <p>Attendance trackers will appear here when available.</p>
+                        <h1>Stats not found</h1>
+                        <p>No stats to report</p>
                     </div>
                 </div>
             </div>
-
-            <button class="open-tracker-modal btn btn--primary" style="margin-top: 3rem;">Add new tracker</button>
         </div>
     </div>
 </div>
@@ -43,16 +43,15 @@
 <a download id="download-anchor"></a>
 
 <script src="/assets/js/dist/jquery.js"></script>
-<script src="/assets/js/dist/qrcode/qrcode.min.js"></script>
 
 <script type="module">
-    import Module from "/assets/js/src/auth/Module.js"
+    import Register from "/assets/js/src/auth/Register.js"
 
     $(() => {
-        Module.get_lecturer_modules()
+        Register.get_students_stats_module();
     })
 
     $('#download-csv').on('click', e => {
-        Module.downloadCSV();
+        Register.downloadReportCSV();
     })
 </script>

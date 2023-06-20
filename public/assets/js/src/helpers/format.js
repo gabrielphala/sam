@@ -55,6 +55,32 @@ export const formatAdminLecturers = (lecturers) => {
     return formated;
 }
 
+export const formatLecturerModules = (modules) => {
+    let formated = '', count = 1;
+
+    modules.forEach(_module => {
+        formated += `
+            <ul class="table__body__row table__body__row--module" data-moduleid="${_module.id}">
+                <li class="table__body__row__item">${count}</li>
+                <li class="table__body__row__item">${_module.name}</li>
+                <li class="table__body__row__item">${_module.code}</li>
+                <li class="table__body__row__item">${getStaticDate(_module.added_on)}</li>
+                <li class="table__body__row__item">
+                    <a href="/l/modules/attendance?m=${_module.id}">
+                        <svg class="table__body__row__item__students image--icon">
+                            <use href="#users"></use>
+                        </svg>
+                    </a>
+                </li>
+            </ul>
+        `;
+
+        count++
+    });
+
+    return formated;
+}
+
 export const formatLecturerStudents = (students) => {
     let formated = '', count = 1;
 
@@ -233,6 +259,26 @@ export const formatStudentStats = (modules) => {
                 <li class="table__body__row__item">${_module.all_attendances}</li>
                 <li class="table__body__row__item">${_module.student_attendances}</li>
                 <li class="table__body__row__item">${(_module.student_attendances / _module.all_attendances * 100).toFixed(2)}%</li>
+            </ul>
+        `
+    });
+
+    return formated;
+}
+
+export const formatModuleStudentStats = (students) => {
+    let formated = '', count = 1;
+
+    students.forEach(student => {
+        formated += `
+            <ul class="table__body__row">
+                <li class="table__body__row__item">${count++}</li>
+                <li class="table__body__row__item">${student.lastname} ${student.initials}</li>
+                <li class="table__body__row__item">${student.name}</li>
+                <li class="table__body__row__item">${student.code}</li>
+                <li class="table__body__row__item">${student.all_attendances}</li>
+                <li class="table__body__row__item">${student.student_attendances}</li>
+                <li class="table__body__row__item">${student.perc}%</li>
             </ul>
         `
     });

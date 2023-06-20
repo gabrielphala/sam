@@ -109,4 +109,29 @@ module.exports = class RegisterService {
 
         return wrap_res;
     }
+
+    static async get_students_stats_module (wrap_res, body) {
+        try {
+            const students = await StudentModule.getStudentsByModule(body.module_id)
+            const res = [];
+
+            const all_attendances = await AttendanceTracker.countByModule(body.module_id);
+
+            for (let i = 0; i < students.length; i++) {
+                const s = students[i];
+                const student_attendances = await Register.countAttendances(body.module_id, s.student_id)               
+
+                res.push({
+                    ...s,
+                    all_attendances,
+                    student_attendances,
+                    perc: (student_attendances / all_attendances * 100).toFixed(2)
+                })
+            }
+
+            wrap_res.students = res;
+            
+        } catch (e) { throw e; }
+        return wrap_res;
+    }
 }

@@ -7,6 +7,7 @@ import {
     formatLecturerStudents,
     formatStudentAttendanceHistory,
     formatStudentStats,
+    formatModuleStudentStats,
     formatStatsCardTrackers,
     formatAttendanceCards
 } from "../helpers/format.js"
@@ -19,6 +20,16 @@ const tableHeader = [
 
 const allowedColumns = [
     'lastname', 'initials', 'student_no'
+]
+
+let cachedAttendance = [];
+
+const tableAHeader = [
+    '#', 'Student name', 'Module name', 'Module code', 'All classes', 'Attended classes', 'Attended classes (%)'
+]
+
+const allowedAColumns = [
+    'lastname', 'name', 'code', 'all_attendances', 'student_attendances', 'perc'
 ]
 
 export default class AttendanceTracker {
@@ -73,6 +84,25 @@ export default class AttendanceTracker {
         return $('#stats-list').html('');
     }
 
+    static async get_students_stats_module () {
+        const response = await fetch('/register/get-module-stats', {
+            body: {
+                module_id: getQuery('m')
+            }
+        });
+
+        cachedAttendance = response.students;
+
+        if (arrayNotEmpty(response.students)) {
+            $('#no-stats').hide();
+            $('#stats-list').html(formatModuleStudentStats(response.students));
+            return;
+        }
+
+        $('#no-stats').show();
+        return $('#stats-list').html('');  
+    }
+
     static async downloadCSV() {
         const response = await fetch('/download/csv', {
             body: {
@@ -80,6 +110,25 @@ export default class AttendanceTracker {
                 tableHeader,
                 allowedColumns,
                 reportName: 'student-register'
+            }
+        });
+
+        if (response.successful) {
+            const anchor = $('#download-anchor')
+
+            anchor.attr('href', `/assets/downloads/tmp/${response.filename}`)
+
+            anchor[0].click();
+        }
+    }
+
+    static async downloadReportCSV () {
+        const response = await fetch('/download/csv', {
+            body: {
+                data: cachedAttendance,
+                tableHeader: tableAHeader,
+                allowedColumns: allowedAColumns,
+                reportName: 'student-attendance'
             }
         });
 

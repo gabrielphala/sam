@@ -16,8 +16,24 @@ module.exports = new (class StudentModule extends SQLifier {
             condition: { student_id },
             join: {
                 ref: 'module',
-                id: 'student_id'
+                id: 'module_id'
             }
+        })
+    }
+
+    getStudentsByModule (module_id) {
+        return this.find({
+            condition: { module_id },
+            join: [
+                {
+                    ref: 'student',
+                    id: 'student_id'
+                },
+                {
+                    ref: 'module',
+                    id: 'module_id'
+                }
+            ]
         })
     }
 })

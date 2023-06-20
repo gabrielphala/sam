@@ -3,7 +3,7 @@ import fetch from "../helpers/fetch.js"
 import { showError } from "../helpers/error.js"
 import { closeModal, openModal } from "../helpers/modal.js"
 import { arrayNotEmpty } from "../helpers/array.js"
-import { formatAdminModules, formatSelect } from "../helpers/format.js"
+import { formatAdminModules, formatLecturerModules, formatSelect } from "../helpers/format.js"
 
 let cachedModules = [];
 
@@ -100,6 +100,22 @@ export default class Module {
             return;
         }
             
+        $('#no-modules').show();
+        return $('#module-list').html('');
+    }
+
+    static async get_lecturer_modules () {
+        const response = await fetch('/module/fetch/lecturer')
+
+        cachedModules = response.modules;
+
+        if (arrayNotEmpty(response.modules)) {
+            $('#no-modules').hide();
+
+            $('#module-list').html(formatLecturerModules(response.modules));
+            return;
+        }
+
         $('#no-modules').show();
         return $('#module-list').html('');
     }
