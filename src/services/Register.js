@@ -92,8 +92,8 @@ module.exports = class RegisterService {
             for (let i = 0; i < studentModules.length; i++) {
                 const _m = studentModules[i];
 
-                const all_attendances = await AttendanceTracker.countByModule(_m.id);
-                const student_attendances = await Register.countAttendances(_m.id, student_info.id)
+                const all_attendances = await AttendanceTracker.countByModule(_m.module_id);
+                const student_attendances = await Register.countAttendances(_m.module_id, student_info.id)
 
                 modules.push({
                     code: _m.code,
