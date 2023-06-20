@@ -2,6 +2,7 @@ const AttendanceTracker = require('../models/AttendanceTracker')
 const Register = require('../models/Register')
 
 const String = require("../helpers/String");
+const StudentModule = require('../models/StudentModule');
 
 module.exports = class RegisterService {
     static async get_latest_spot (wrap_res, body, store) {
@@ -81,5 +82,31 @@ module.exports = class RegisterService {
 
             return wrap_res;
         } catch (e) { throw e; }
+    }
+
+    static async get_stats (wrap_res, body, { student_info }) {
+        try {
+            const studentModules = await StudentModule.getBystudent(student_info.id)
+            const modules = [];
+
+            for (let i = 0; i < studentModules.length; i++) {
+                const _m = studentModules[i];
+
+                const all_attendances = await AttendanceTracker.countByModule(_m.id);
+                const student_attendances = await Register.countAttendances(_m.id, student_info.id)
+
+                modules.push({
+                    code: _m.code,
+                    name: _m.name,
+                    all_attendances,
+                    student_attendances
+                })
+            }
+
+            wrap_res.modules = modules;
+            wrap_res.successful = true;
+        } catch (e) { throw e; }
+
+        return wrap_res;
     }
 }

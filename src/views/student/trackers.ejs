@@ -5,8 +5,9 @@
 
         <nav class="container__main__dropdown-menu hide">
             <ul>
-                <li><a href="/s/attendances">Attendance</a></li>
-                <li><a href="/s/trackers">History</a></li>
+                <li><a href="/s/trackers">Attendance</a></li>
+                <li><a href="/s/stats">Stats</a></li>
+                <li><a href="/s/attendances">History</a></li>
                 <li><a href="/s/sign-out">Sign out</a></li>
             </ul>
         </nav>
@@ -70,6 +71,7 @@
 <script type="module">
     import { openModal, closeModal } from "/assets/js/src/helpers/modal.js"
     import AttendanceTracker from "/assets/js/src/auth/AttendanceTracker.js"
+    import Register from "/assets/js/src/auth/Register.js"
 
     $('.close-qr-code-modal').on('click', e => closeModal('qr-code-reader'));
 
@@ -78,10 +80,10 @@
     })
 
     $('#toggle-dropdown-menu').on('click', e => {
-            const menu = $('.container__main__dropdown-menu')[0]
+        const menu = $('.container__main__dropdown-menu')[0]
 
-            if (Array.from(menu.classList).includes('hide')) return $(menu).removeClass('hide');
+        if (Array.from(menu.classList).includes('hide')) return $(menu).removeClass('hide');
 
-            $(menu).addClass('hide');
-        })
+        $(menu).addClass('hide');
+    })
 </script>

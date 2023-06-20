@@ -7,7 +7,11 @@
             <h1>Trackers</h1>
             <p>Keep track of your students' attendances</p>
         </div>
+        
         <div class="container__main__focus">
+            <div class="reports" style="margin-bottom: 2rem;">
+                <p id="download-csv">Download CSV Report</p>
+            </div>
             <div class="card table">
                 <div class="table__header">
                     <ul class="table__header__row flex">
@@ -138,6 +142,8 @@
     </div>
 </div>
 
+<a download id="download-anchor"></a>
+
 <script src="/assets/js/dist/jquery.js"></script>
 <script src="/assets/js/dist/qrcode/qrcode.min.js"></script>
 
@@ -174,5 +180,9 @@
     $(() => {
         Module.load_modules_by_lecturer()
         AttendanceTracker.get_by_lecturer()
+    })
+
+    $('#download-csv').on('click', e => {
+        AttendanceTracker.downloadLecturerCSV();
     })
 </script>

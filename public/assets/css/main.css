@@ -185,7 +185,8 @@ li {
   padding-left: 30rem;
 }
 .container__main #tracker-card-container,
-.container__main #attendance-card-container {
+.container__main #attendance-card-container,
+.container__main #stats-card-container {
   display: none;
 }
 @media (max-width: 960px) {
@@ -193,11 +194,12 @@ li {
     padding-left: 0rem;
   }
   .container__main #tracker-card-container,
-  .container__main #attendance-card-container {
+  .container__main #stats-card-container {
     display: grid;
   }
   .container__main #tracker-table-container,
-  .container__main #attendance-table-container {
+  .container__main #attendance-table-container,
+  .container__main #stats-table-container {
     display: none;
     visibility: hidden;
     pointer-events: none;

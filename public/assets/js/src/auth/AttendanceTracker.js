@@ -5,6 +5,7 @@ import { arrayNotEmpty } from "../helpers/array.js"
 
 import {
     formatLecturerAttendanceTrackers,
+    formatLecturerOldAttendanceTrackers,
     formatStudentAttendanceTrackers,
     formatStudentAttendanceCardTrackers,
     formatAdminAttendanceTrackers
@@ -21,6 +22,16 @@ const tableHeader = [
 
 const allowedColumns = [
     'lastname', 'initials', 'name', 'start_period', 'end_period'
+]
+
+let cachedLTrackers = [];
+
+const lTableHeader = [
+    '#', 'Module', 'Attendance count', 'Starts', 'Ends'
+]
+
+const lAllowedColumns = [
+    'name', 'attendance_count', 'start_period', 'end_period'
 ]
 
 export default class AttendanceTracker {
@@ -145,6 +156,8 @@ export default class AttendanceTracker {
         const response = await fetch('/attendance-tracker/fetch/lecturer')
 
         if (arrayNotEmpty(response.attendanceTrackers)) {
+            cachedLTrackers = response.attendanceTrackers;
+
             $('#no-attendance-trackers').hide();
             
             $('#attendance-tracker-list').html(formatLecturerAttendanceTrackers(response.attendanceTrackers));
@@ -183,6 +196,28 @@ export default class AttendanceTracker {
                 openModal('edit-tracker');
                 // await AttendanceTracker.edit();
             })
+
+            return;
+        }
+
+        $('#no-attendance-trackers').show();
+        return $('#attendance-tracker-list').html('');
+    }
+
+    static async get_old_by_lecturer() {
+        const response = await fetch('/attendance-tracker/fetch/old/lecturer')
+
+        if (arrayNotEmpty(response.attendanceTrackers)) {
+            cachedLTrackers = response.attendanceTrackers;
+
+            $('#no-attendance-trackers').hide();
+
+            $('#attendance-tracker-list').html(formatLecturerOldAttendanceTrackers(response.attendanceTrackers));
+
+            $('.table__body__row__item__students').on('click', e => {
+                location.href =
+                    `/l/attendances?t=${e.currentTarget.dataset.attendancetrackerid}`;
+            });
 
             return;
         }
@@ -233,6 +268,25 @@ export default class AttendanceTracker {
                 data: cachedTrackers,
                 tableHeader,
                 allowedColumns,
+                reportName: 'trackers'
+            }
+        });
+
+        if (response.successful) {
+            const anchor = $('#download-anchor')
+
+            anchor.attr('href', `/assets/downloads/tmp/${response.filename}`)
+
+            anchor[0].click();
+        }
+    }
+    
+    static async downloadLecturerCSV () {
+        const response = await fetch('/download/csv', {
+            body: {
+                data: cachedLTrackers,
+                tableHeader: lTableHeader,
+                allowedColumns: lAllowedColumns,
                 reportName: 'trackers'
             }
         });

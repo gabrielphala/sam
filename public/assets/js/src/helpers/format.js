@@ -132,6 +132,33 @@ export const formatLecturerAttendanceTrackers = (attendanceTrackers) => {
     return formated;
 }
 
+export const formatLecturerOldAttendanceTrackers = (attendanceTrackers) => {
+    let formated = '', count = 1;
+
+    attendanceTrackers.forEach(attendanceTracker => {
+        formated += `
+            <ul class="table__body__row">
+                <li class="table__body__row__item table__body__row--attendanceTracker"data-attendancetrackerid="${attendanceTracker.id}" data-attendancetrackermoduleid="${attendanceTracker.module_id}">${count}</li>
+                <li class="table__body__row__item table__body__row--attendanceTracker"data-attendancetrackerid="${attendanceTracker.id}" data-attendancetrackermoduleid="${attendanceTracker.module_id}">${attendanceTracker.name}</li>
+                <li class="table__body__row__item table__body__row--attendanceTracker"data-attendancetrackerid="${attendanceTracker.id}" data-attendancetrackermoduleid="${attendanceTracker.module_id}">${attendanceTracker.attendance_count}</li>
+                <li class="table__body__row__item table__body__row--attendanceTracker"data-attendancetrackerid="${attendanceTracker.id}" data-attendancetrackermoduleid="${attendanceTracker.module_id}">${getStaticDate(attendanceTracker.start_period)}</li>
+                <li class="table__body__row__item table__body__row--attendanceTracker"data-attendancetrackerid="${attendanceTracker.id}" data-attendancetrackermoduleid="${attendanceTracker.module_id}">${getStaticDate(attendanceTracker.end_period)}</li>
+                <li class="table__body__row__item table__body__row--attendanceTracker"data-attendancetrackerid="${attendanceTracker.id}" data-attendancetrackermoduleid="${attendanceTracker.module_id}">${attendanceTracker.status}</li>
+                <li class="table__body__row__item">
+                    <svg class="table__body__row__item__students image--icon"data-attendancetrackerid="${attendanceTracker.id}" data-attendancetrackermoduleid="${attendanceTracker.module_id}">
+                        <use href="#users"></use>
+                    </svg>
+                </li>
+            </ul>
+        `
+
+        count++
+    });
+
+    return formated;
+}
+
+
 export const formatStudentAttendanceTrackers = (attendanceTrackers) => {
     let formated = '', count = 1;
 
@@ -191,6 +218,25 @@ export const formatStudentAttendanceHistory = (attendances) => {
     return formated;
 }
 
+export const formatStudentStats = (modules) => {
+    let formated = '', count = 1;
+
+    modules.forEach(_module => {
+        formated += `
+            <ul class="table__body__row">
+                <li class="table__body__row__item">${count++}</li>
+                <li class="table__body__row__item">${_module.name}</li>
+                <li class="table__body__row__item">${_module.code}</li>
+                <li class="table__body__row__item">${_module.all_attendances}</li>
+                <li class="table__body__row__item">${_module.student_attendances}</li>
+                <li class="table__body__row__item">${(_module.student_attendances / _module.all_attendances * 100).toFixed(2)}%</li>
+            </ul>
+        `
+    });
+
+    return formated;
+}
+
 export const formatStudentAttendanceCardTrackers = (attendanceTrackers) => {
     let formated = '', count = 1;
 
@@ -207,6 +253,34 @@ export const formatStudentAttendanceCardTrackers = (attendanceTrackers) => {
                 </div>
                 <div class="card__footer">
                     <p>Register</p>
+                </div>
+            </div>
+        `
+
+        count++
+    });
+
+    return formated;
+}
+
+export const formatStatsCardTrackers = (stats) => {
+    let formated = '', count = 1;
+
+    stats.forEach(stat => {
+        formated += `
+            <div class="container__main__focus__cards__item card">
+                <div class="card__header card__header--no-border">
+                    <div class="card__header__left">
+                        <h1>${stat.name}</h1>
+                        <p>${stat.code}</p>
+                    </div>
+                </div>
+                <div class="card__body">
+                    <p>All classes: ${stat.all_attendances}</p>
+                </div>
+                <div class="card__footer flex flex--j-space-between">
+                    <p>Attended classes: ${stat.student_attendances}</p>
+                    <p>${(stat.student_attendances / stat.all_attendances * 100).toFixed(2) }%</p>
                 </div>
             </div>
         `

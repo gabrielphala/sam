@@ -24,12 +24,25 @@ module.exports = new (class AttendanceTracker extends SQLifier {
     }
 
     getByLecturer (lecturer_id) {
-        console.log(SQLDate.now());
         return this.find({
             condition: {
                 lecturer_id,
                 is_deleted: false,
                 end_period: { $gt: SQLDate.now() }
+            },
+            join: {
+                ref: 'module',
+                id: 'module_id'
+            }
+        })
+    }
+
+    getOldByLecturer (lecturer_id) {
+        return this.find({
+            condition: {
+                lecturer_id,
+                is_deleted: false,
+                end_period: { $lt: SQLDate.now() }
             },
             join: {
                 ref: 'module',
@@ -61,5 +74,11 @@ module.exports = new (class AttendanceTracker extends SQLifier {
 
     deleteTracker (id) {
         this.update({ id }, { is_deleted: true, status: 'closed' })
+    }
+
+    countByModule (module_id) {
+        return this.count({
+            module_id
+        });
     }
 })

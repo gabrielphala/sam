@@ -1,0 +1,60 @@
+<div class="container">
+    <%- include('../partials/sidenav/lecturer') %>
+    <div class="container__main">
+        <%- include('../partials/header/lecturer') %>
+
+        <div class="container__main__title">
+            <h1>History</h1>
+            <p>Past trackers</p>
+        </div>
+        
+        <div class="container__main__focus">
+            <div class="reports" style="margin-bottom: 2rem;">
+                <p id="download-csv">Download CSV Report</p>
+            </div>
+            
+            <div class="card table">
+                <div class="table__header">
+                    <ul class="table__header__row flex">
+                        <li class="table__header__row__item">#</li>
+                        <li class="table__header__row__item">Module</li>
+                        <li class="table__header__row__item">Attendance count</li>
+                        <li class="table__header__row__item">Period start</li>
+                        <li class="table__header__row__item">Period end</li>
+                        <li class="table__header__row__item">Status</li>
+                        <li class="table__header__row__item">...</li>
+                    </ul>
+                </div>
+                <div class="table__body" id="attendance-tracker-list">
+                    <ul class="table__body__row"></ul>
+                </div>
+                <div class="card__body empty flex flex--a-center flex--j-center" id="no-attendance-trackers" style="display: none;">
+                    <img src="/assets/illustrations/no-data.svg" alt="No data">
+                    <div class="empty_caption">
+                        <h1>Attendance trackers not found</h1>
+                        <p>There aren't any attendance trackers at the moment.</p>
+                        <p>Attendance trackers will appear here when available.</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="open-tracker-modal btn btn--primary" style="margin-top: 3rem;">Add new tracker</button>
+        </div>
+    </div>
+</div>
+
+<a download id="download-anchor"></a>
+
+<script src="/assets/js/dist/jquery.js"></script>
+
+<script type="module">
+    import AttendanceTracker from "/assets/js/src/auth/AttendanceTracker.js"
+
+    $(() => {
+        AttendanceTracker.get_old_by_lecturer()
+    })
+
+    $('#download-csv').on('click', e => {
+        AttendanceTracker.downloadLecturerCSV();
+    })
+</script>

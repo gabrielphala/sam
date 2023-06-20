@@ -60,6 +60,14 @@ module.exports = class AttendanceService {
         } catch (e) { throw e; }
     }
 
+    static async get_old_by_lecturer (wrap_res, _, { lecturer_info }) {
+        try {
+            wrap_res.attendanceTrackers = await AttendanceTracker.getOldByLecturer(lecturer_info.id);
+
+            return wrap_res;
+        } catch (e) { throw e; }
+    }
+
     static async get_for_admin (wrap_res, _) {
         try {
             wrap_res.attendanceTrackers = await AttendanceTracker.getForAdmin();

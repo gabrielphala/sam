@@ -7,7 +7,7 @@ module.exports = (router) => {
     router.get('/l/sign-in', base_controller.render('lecturer/sign-in', 'Sign in'));
     router.get('/l/trackers', isLecturerAuth, base_controller.render('lecturer/trackers', 'Attendane trackers'));
     router.get('/l/attendances', isLecturerAuth, base_controller.render('lecturer/attendances', 'Students'));
-    // router.get('/l/my-modules', base_controller.render('lecturer/modules', 'Modules'));
+    router.get('/l/history', base_controller.render('lecturer/history', 'History'));
     // router.get('/l/attendances/report', base_controller.render('lecturer/attendance-report', 'Attendance report'));
     router.get('/l/sign-out', base_controller.sign_out);
 

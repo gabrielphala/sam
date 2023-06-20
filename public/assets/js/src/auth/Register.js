@@ -6,6 +6,8 @@ import { arrayNotEmpty } from "../helpers/array.js"
 import {
     formatLecturerStudents,
     formatStudentAttendanceHistory,
+    formatStudentStats,
+    formatStatsCardTrackers,
     formatAttendanceCards
 } from "../helpers/format.js"
 
@@ -29,8 +31,6 @@ export default class AttendanceTracker {
 
         cachedStudents = response.students;
 
-        console.log(cachedStudents);
-
         if (arrayNotEmpty(response.students)) {
             $('#no-attendances').hide();
             $('#attendance-list').html(formatLecturerStudents(response.students));
@@ -46,8 +46,6 @@ export default class AttendanceTracker {
 
         // cachedTrackers = response.attendanceTrackers;
 
-        console.log(formatAttendanceCards(response.students))
-
         if (arrayNotEmpty(response.students)) {
             $('#no-attendances').hide();
             $('#attendance-list').html(formatStudentAttendanceHistory(response.students));
@@ -58,6 +56,21 @@ export default class AttendanceTracker {
         $('#no-attendances').show();
         $('#attendance-card-container').html('');
         return $('#attendance-list').html('');
+    }
+
+    static async get_stats () {
+        const response = await fetch('/register/get-stats');
+
+        if (arrayNotEmpty(response.modules)) {
+            $('#no-stats').hide();
+            $('#stats-list').html(formatStudentStats(response.modules));
+            $('#stats-card-container').html(formatStatsCardTrackers(response.modules));
+            return;
+        }
+
+        $('#no-stats').show();
+        $('#stats-card-container').html('');
+        return $('#stats-list').html('');
     }
 
     static async downloadCSV() {

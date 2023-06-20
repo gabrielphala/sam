@@ -61,4 +61,10 @@ module.exports = new (class Register extends SQLifier {
             attendance_tracker_id
         });
     }
+
+    countAttendances (module_id, student_id) {
+        return this.count({
+            module_id, student_id
+        });
+    }
 })

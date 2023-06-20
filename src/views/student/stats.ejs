@@ -13,32 +13,34 @@
         </nav>
 
         <div class="container__main__title">
-            <h1>Attendance history</h1>
-            <p>Keep track of your attendance history</p>
+            <h1>Attendance stats</h1>
+            <p>Keep track of your attendance stats</p>
         </div>
         <div class="container__main__focus">
-            <div class="card table" id="attendance-table-container">
+            <div class="card table" id="stats-table-container">
                 <div class="table__header">
                     <ul class="table__header__row flex">
                         <li class="table__header__row__item">#</li>
-                        <li class="table__header__row__item">Module</li>
-                        <li class="table__header__row__item">PC No</li>
-                        <li class="table__header__row__item">Start Period</li>
-                        <li class="table__header__row__item">End Period</li>
+                        <li class="table__header__row__item">Module name</li>
+                        <li class="table__header__row__item">Module code</li>
+                        <li class="table__header__row__item">All classes</li>
+                        <li class="table__header__row__item">Attended classes</li>
+                        <li class="table__header__row__item">Attended classes (%)</li>
                     </ul>
                 </div>
-                <div class="table__body" id="attendance-list">
+                <div class="table__body" id="stats-list">
                     <ul class="table__body__row"></ul>
                 </div>
-                <div class="card__body empty flex flex--a-center flex--j-center" id="no-attendances" style="display: none;">
+                <div class="card__body empty flex flex--a-center flex--j-center" id="no-stats" style="display: none;">
                     <img src="/assets/illustrations/no-data.svg" alt="No data">
                     <div class="empty_caption">
-                        <h1>Hisotry not found</h1>
-                        <p>You have not attended any classes</p>
+                        <h1>Stats not found</h1>
+                        <p>No stats to report</p>
                     </div>
                 </div>
             </div>
-            <div class="container__main__focus__cards" id="attendance-card-container"></div>
+            <div class="container__main__focus__cards" id="stats-card-container">
+            </div>
         </div>
     </div>
 </div>
@@ -49,7 +51,7 @@
     import Register from "/assets/js/src/auth/Register.js"
 
     $(() => {
-        Register.get_attendances();
+        Register.get_stats();
     })
 
     $('#toggle-dropdown-menu').on('click', e => {

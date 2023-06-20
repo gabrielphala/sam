@@ -3,18 +3,18 @@
         position: relative;
         padding-left: 30rem;
 
-        #tracker-card-container, #attendance-card-container{
+        #tracker-card-container, #attendance-card-container, #stats-card-container{
             display: none;
         }
 
         .breakpoint(@BTABLET, {
             padding-left: 0rem;
 
-            #tracker-card-container, #attendance-card-container{
+            #tracker-card-container, #stats-card-container{
                 display: grid;
             }
 
-            #tracker-table-container, #attendance-table-container{
+            #tracker-table-container, #attendance-table-container, #stats-table-container{
                 display: none;
                 visibility: hidden;
                 pointer-events: none;
