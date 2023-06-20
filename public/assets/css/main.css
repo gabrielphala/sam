@@ -345,15 +345,19 @@ li {
 }
 .table__body__row__item svg {
   fill: #b1b1b1;
-}
-.table__body__row__item__edit {
   cursor: pointer;
+}
+.table__body__row__item svg:not(:last-child) {
+  margin-right: 1rem;
+}
+.table__body__row__item__view:hover {
+  fill: green;
+}
+.table__body__row__item__students:hover {
+  fill: #52aca9;
 }
 .table__body__row__item__edit:hover {
   fill: #377ced;
-}
-.table__body__row__item__delete {
-  cursor: pointer;
 }
 .table__body__row__item__delete:hover {
   fill: darkred;

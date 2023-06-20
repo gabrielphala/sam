@@ -37,19 +37,32 @@
             &__item{
                 svg {
                     fill: #b1b1b1;
+                    cursor: pointer;
+
+                    &:not(:last-child){
+                        margin-right: 1rem;
+                    }
+                }
+
+                &__view{
+                    &:hover{
+                        fill: green;
+                    }
+                }
+
+                &__students{
+                    &:hover{
+                        fill: #52aca9;
+                    }
                 }
 
                 &__edit {
-                    cursor: pointer;
-
                     &:hover{
                         fill: #377ced;
                     }
                 }
             
                 &__delete {
-                    cursor: pointer;
-
                     &:hover{
                         fill: darkred;
                     }

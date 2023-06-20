@@ -113,6 +113,9 @@ export const formatLecturerAttendanceTrackers = (attendanceTrackers) => {
                 <li class="table__body__row__item table__body__row--attendanceTracker"data-attendancetrackerid="${attendanceTracker.id}" data-attendancetrackermoduleid="${attendanceTracker.module_id}">${getStaticDate(attendanceTracker.end_period)}</li>
                 <li class="table__body__row__item table__body__row--attendanceTracker"data-attendancetrackerid="${attendanceTracker.id}" data-attendancetrackermoduleid="${attendanceTracker.module_id}">${attendanceTracker.status}</li>
                 <li class="table__body__row__item">
+                    <svg class="table__body__row__item__view table__body__row--attendanceTracker image--icon"data-attendancetrackerid="${attendanceTracker.id}" data-attendancetrackermoduleid="${attendanceTracker.module_id}">
+                        <use href="#visible"></use>
+                    </svg>
                     <svg class="table__body__row__item__students image--icon"data-attendancetrackerid="${attendanceTracker.id}" data-attendancetrackermoduleid="${attendanceTracker.module_id}">
                         <use href="#users"></use>
                     </svg>
